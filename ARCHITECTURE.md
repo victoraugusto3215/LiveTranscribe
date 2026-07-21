@@ -9,11 +9,7 @@ Transcrição de áudio com entrega progressiva (texto aparece enquanto o áudio
 
 ### 2.1 Front-end separado do back-end (não monolito Blazor Server)
 
-O front-end (React + Vite) é desacoplado do back-end (ASP.NET Core Web API), no mesmo padrão do Hope Pet. Motivo: mostra duas competências distintas no portfólio, é o padrão real de mercado (Slack, Teams, Meet — front desacoplado + gateway de real-time), e permite deploy independente (front em Vercel/Netlify, back em Fly.io).
-
 **Streaming não passa pela REST API.** REST é request/response, um ciclo HTTP fecha por chamada — não é usado pro áudio. O streaming usa um **Hub SignalR**, que abre uma conexão persistente (WebSocket, com fallback SSE/long-polling). É outro endpoint (`/hubs/transcription`), outro protocolo, independente da API REST. Separar front de back não piora latência nem confiabilidade do streaming — o único custo extra é o handshake inicial da conexão, que acontece uma vez por sessão, não por chunk de áudio.
-
-Nenhum dos três projetos anteriores (PersonalPay, RachaContas, Hope Pet) tem um Hub SignalR real implementado — PersonalPay usa Blazor Server, cujo "tempo real" é o circuito do framework abstraindo SignalR por baixo, sem um `Hub` explícito. Este projeto é a primeira implementação de verdade dessa peça.
 
 ### 2.2 Transporte já resolve perda de pacote — o que falta resolver é nível de aplicação
 
@@ -26,10 +22,6 @@ WebSocket roda sobre TCP: entrega ordenada e sem perda de pacote já é garantid
 ### 2.3 Expectativa de latência
 
 Whisper (local ou via Groq) não é um modelo de streaming token-a-token como Azure/Google/Deepgram Speech-to-Text streaming — ele transcreve blocos de áudio. A entrega "em tempo real" aqui é **progressiva por janelas** (~3-4s por chunk), não instantânea palavra-por-palavra. Latência esperada: 1-3s por trecho usando Groq (`whisper-large-v3-turbo`, processa mais rápido que tempo real). Isso é consistente com como produtos reais de captioning ao vivo funcionam (texto parcial, depois corrigido por uma passada final mais precisa).
-
-### 2.4 Single-user no MVP
-
-Sem login nas primeiras fases — foco no pipeline de streaming. Autenticação (JWT em cookie HttpOnly, no padrão do Hope Pet) fica como fase futura, se fizer sentido introduzir sessões por usuário.
 
 ## 3. Estrutura de pastas
 
@@ -99,16 +91,3 @@ public interface ITranscriptionProvider
 
 Começar com `GroqWhisperProvider` (`whisper-large-v3-turbo`, free tier, zero infra). Deixar `FasterWhisperLocalProvider` como segunda implementação opcional (sidecar local) — mostra maturidade de arquitetura sem exigir infra pesada de início.
 
-## 9. Roadmap por fases
-
-**Fase 1 — MVP: upload de arquivo com entrega progressiva**
-Usuário sobe um áudio já gravado. Backend corta em chunks e processa sequencialmente "como se" fosse ao vivo, empurrando parciais via SignalR conforme processa. Prova o valor central (entrega progressiva) sem a complexidade de captura de microfone, VAD ou reconexão. Sem autenticação.
-
-**Fase 2 — microfone ao vivo**
-Adiciona `AudioWorklet` + VAD no browser, usando o mesmo pipeline de chunk do backend.
-
-**Fase 3 — robustez**
-Resume após desconexão, múltiplos ouvintes por sessão, provider local (`FasterWhisperLocalProvider`) como fallback.
-
-**Fase 4 — opcional**
-Autenticação (JWT em cookie HttpOnly), sessões por usuário, histórico.
