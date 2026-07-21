@@ -4,7 +4,6 @@
 
 Transcrição de áudio com entrega progressiva (texto aparece enquanto o áudio é processado, não só depois de terminar). Casos de uso reais que motivam as decisões abaixo: legendagem ao vivo de reunião/aula (acessibilidade), transcrição de entrevista, apoio a atendimento (supervisor acompanhando uma call em andamento), ditado médico/jurídico.
 
-Projeto de portfólio, mas as decisões técnicas seguem critérios de produto real: sem perda de dado no nível de aplicação, backpressure controlado, resiliência a queda de conexão.
 
 ## 2. Decisões de arquitetura
 
