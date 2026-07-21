@@ -100,20 +100,7 @@ public interface ITranscriptionProvider
 
 Começar com `GroqWhisperProvider` (`whisper-large-v3-turbo`, free tier, zero infra). Deixar `FasterWhisperLocalProvider` como segunda implementação opcional (sidecar local) — mostra maturidade de arquitetura sem exigir infra pesada de início.
 
-## 8. Deploy
-
-- Backend: Dockerfile multi-stage (padrão RachaContas), Fly.io com volume persistente (SQLite + chunks de áudio).
-- Frontend: build estático Vite em Vercel/Netlify.
-- CORS explícito liberando a origem do front-end.
-- Observação de escala: se algum dia sair de uma única instância, WebSocket via SignalR precisa de backplane (Redis) ou sticky sessions — não é necessário pro escopo de portfólio, mas vale citar no README como decisão consciente de trade-off.
-
-## 9. O que reaproveitar dos outros projetos
-
-- **PersonalPay**: padrão de fila (`Channel<T>`) + `BackgroundService` desacoplando ingestão/processamento (aqui, com bounded em vez de unbounded); `DbContextFactory` para contexto de vida curta.
-- **RachaContas**: Dockerfile multi-stage + deploy Fly.io com volume persistente; EF Core + SQLite com migration automática no startup; testes xUnit.
-- **Hope Pet**: padrão de separação front/back (React + Vite consumindo API via HTTP), CORS explícito — reaproveitado como referência conceitual, não código (o código do Hope Pet não é público).
-
-## 10. Roadmap por fases
+## 9. Roadmap por fases
 
 **Fase 1 — MVP: upload de arquivo com entrega progressiva**
 Usuário sobe um áudio já gravado. Backend corta em chunks e processa sequencialmente "como se" fosse ao vivo, empurrando parciais via SignalR conforme processa. Prova o valor central (entrega progressiva) sem a complexidade de captura de microfone, VAD ou reconexão. Sem autenticação.
