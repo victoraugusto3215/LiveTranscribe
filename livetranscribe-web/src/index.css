@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+/* dark: responds to a .dark class on <html> (set by useTheme), not to OS preference directly */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* page background sits one step below card/surface background, so cards read as raised */
+  --color-paper: #eef3f2;
+  --color-paper-soft: #ffffff;
+  --color-ink: #101817;
+  --color-ink-soft: #4c6663;
+  --color-line: #d7e2e0;
+
+  --color-paper-night: #0a1312;
+  --color-paper-night-soft: #0f1b1a;
+  --color-ink-night: #e7f2f0;
+  --color-ink-night-soft: #93aca8;
+  --color-line-night: #213330;
+
+  /* accent: signal teal, not the generic AI purple-blue */
+  --color-accent: #0c8c82;
+  --color-accent-soft: #2fd1c2;
+  --color-success: #1e9e63;
+  --color-success-soft: #3fce86;
+  --color-warning: #b9740e;
+  --color-warning-soft: #e0a23a;
+  --color-danger: #b23b2e;
+  --color-danger-soft: #e2685a;
+}
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-breathe {
+  animation: breathe 1.8s ease-in-out infinite;
+}
+
+.animate-rise {
+  animation: rise 0.35s ease-out both;
+}

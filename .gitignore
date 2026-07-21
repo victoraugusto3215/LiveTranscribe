@@ -1,0 +1,7 @@
+bin/
+obj/
+.vs/
+*.user
+
+# banco local e áudio de sessões (durabilidade em disco, não deve ir pro git)
+LiveTranscribe.Api/App_Data/

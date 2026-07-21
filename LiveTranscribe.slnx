@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="LiveTranscribe.Api/LiveTranscribe.Api.csproj" />
+  <Project Path="LiveTranscribe.Tests/LiveTranscribe.Tests.csproj" />
+</Solution>
