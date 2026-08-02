@@ -5,3 +5,9 @@ obj/
 
 # banco local e áudio de sessões (durabilidade em disco, não deve ir pro git)
 LiveTranscribe.Api/App_Data/
+
+# frontend (livetranscribe-web)
+node_modules/
+dist/
+.env
+.env.local
