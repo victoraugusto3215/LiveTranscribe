@@ -34,6 +34,9 @@ jobs:
           cache: 'npm'
           cache-dependency-path: livetranscribe-web/package-lock.json
       - name: Install
-        run: npm ci
+        # npm ci falha aqui: o oxlint (linter WASM) tem um problema conhecido
+        # de empacotamento de dependências opcionais por plataforma que
+        # confunde a checagem estrita do lockfile. npm install resolve certo.
+        run: npm install
       - name: Build
         run: npm run build
