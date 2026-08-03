@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/victoraugustovalle/LiveTranscribe/actions/workflows/ci.yml/badge.svg)](https://github.com/victoraugustovalle/LiveTranscribe/actions/workflows/ci.yml)
 
+![Screenshot do LiveTranscribe: upload de áudio à esquerda, transcrição chegando em tempo real à direita](docs/screenshot.png)
+
 Transcrição de áudio com entrega progressiva, o texto aparece enquanto o áudio ainda está sendo processado, não só no final.
 
 ## O que é
