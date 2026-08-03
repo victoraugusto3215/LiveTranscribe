@@ -1,6 +1,6 @@
 # LiveTranscribe
 
-[![CI](https://github.com/victoraugusto3215/LiveTranscribe/actions/workflows/ci.yml/badge.svg)](https://github.com/victoraugusto3215/LiveTranscribe/actions/workflows/ci.yml)
+[![CI](https://github.com/victoraugustovalle/LiveTranscribe/actions/workflows/ci.yml/badge.svg)](https://github.com/victoraugustovalle/LiveTranscribe/actions/workflows/ci.yml)
 
 Transcrição de áudio com entrega progressiva, o texto aparece enquanto o áudio ainda está sendo processado, não só no final.
 
